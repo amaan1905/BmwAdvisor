@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BMW Advisor</title>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+            background-color: grey;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            position: absolute;
+        }
+
+        .header button {
+            border-radius: 100%;
+            background-color: black;
+            color: white;
+            margin-left: auto;
+            cursor: pointer;
+            height: 30px;
+            width: 30px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .header button:hover {
+            background-color: rgb(56, 56, 56);
+        }
+
+        .chatbot-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        .chat-container {
+            width: 800px;
+            height: 400px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            background-color: rgb(0, 0, 0);
+            padding: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .chat-container img.logo-bg {
+            width: 45%;
+            height: auto;
+            opacity: .6;
+            z-index: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+        .message-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .message-container .message {
+            margin-bottom: 10px;
+            background-color: #03b8ff;
+            border-radius: 5px;
+            z-index: 1;
+            padding: 10px;
+            color: white;
+            max-width: 45%;
+            opacity: 1;
+            position: relative;
+        }
+
+        .message-container.user .message {
+            margin-left: auto;
+            background-color: #03b8ff;
+        }
+
+        .message-container.bot .message {
+            margin-right: auto;
+            background-color: #ff8503;
+        }
+
+        .message-container.bot .logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 800px;
+            padding-top: 15px;
+            flex-direction: row;
+            position: relative;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            width: 100%;
+            padding: 15px;
+            padding-right: 40px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 16px;
+            background-color: lightgrey;
+        }
+
+        .chat-input-container button {
+            top: 50%;
+            background-color: black;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 1;
+            position: absolute;
+            right: 0;
+            transform: translateY(-20%);
+        }
+
+        .chat-input-container button:hover {
+            background-color: rgb(56, 56, 56);
+        }
+    </style>
+</head>
+<body id="body">
+    <div class="header">
+        <h1>BMW Advisor</h1>
+        <button id="help-btn" onclick="window.location.href='https://www.bmw.co.uk/en/index.html'">?</button>
+    </div>
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chat-container" class="chat-container">
+            <img class='logo-bg' src="https://static.vecteezy.com/system/resources/previews/020/500/085/original/bmw-brand-logo-symbol-white-design-germany-car-automobile-illustration-with-black-background-free-vector.jpg" />
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="user-input" placeholder="Enter your query: " />
+            <button id="send-btn">></button>
+        </div>
+    </div>
+    <script>
+        const chatContainer = document.getElementById("chat-container");
+        const userInput = document.getElementById("user-input");
+        const sendBtn = document.getElementById("send-btn");
+        let sessionId = null;
+
+        sendBtn.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userMessage = userInput.value.trim();
+            if (userMessage) {
+                displayMessage('user', userMessage);
+                sendMessageToServer(userMessage);
+                userInput.value = "";
+            }
+        }
+
+        function displayMessage(sender, message) {
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('message-container', sender);
+            
+
+            if (sender === 'bot') {
+                const logoElement = document.createElement('img');
+                logoElement.src = 'https://static.vecteezy.com/system/resources/previews/020/500/085/original/bmw-brand-logo-symbol-white-design-germany-car-automobile-illustration-with-black-background-free-vector.jpg';
+                logoElement.classList.add('logo');
+                messageContainer.appendChild(logoElement);
+            }
+            
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.textContent = message;
+
+            messageContainer.appendChild(messageElement);
+            chatContainer.appendChild(messageContainer);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function sendMessageToServer(message) {
+            fetch('chatbot_pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question: message, session_id: sessionId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayMessage('bot', data.response);
+                if (!sessionId) {
+                    sessionId = data.session_id;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
