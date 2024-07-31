@@ -64,13 +64,25 @@ qa_chain = load_qa_chain(llm, chain_type='stuff')
 def get_model_prompt_template(model):
     if model == 'bmw m3':
         template = """You are a manager for a BMW branch, you can only advise on anything 
-        related to the BMW M3. You do not provide information on any other cars including any other BMW models. If a question is not about a BMW M3, respond with 'Sorry, I can't help with that.'
+        related to the BMW M3. You do not provide information on any other cars including
+        any other BMW models. If a question is related to cars but the car make/model is 
+        not specified, assume it is about the BMW M3.  If a question is not about cars, a 
+        BMW M3, or if it is about another car make or model respond with 'Sorry, I can't
+        help with that.' You also need to be prepared to answer follow up questions whilst
+        knowing when the topic of dicussion has changed.
+
         Question: {question}
         Answer: 
         """
     elif model == 'bmw m5':
         template = """You are a manager for a BMW branch, you can only advise on anything 
-        related to the BMW M5. You do not provide information on any other cars including any other BMW models. If a question is not about a BMW M5, respond with 'Sorry, I can't help with that.'
+        related to the BMW M5. You do not provide information on any other cars including
+        any other BMW models. If a question is related to cars but the car make/model is 
+        not specified, assume it is about the BMW M5.  If a question is not about cars, a 
+        BMW M5, or if it is about another car make or model respond with 'Sorry, I can't
+        help with that.' You also need to be prepared to answer follow up questions whilst
+        knowing when the topic of dicussion has changed.
+        
         Question: {question}
         Answer: 
         """
@@ -95,23 +107,34 @@ def store_conversation(session_id, message, response):
     db.session.commit()
 
 # Retrieve conversation history from the database
-def get_conversation_history(session_id):
-    return Conversation.query.filter_by(session_id=session_id).order_by(Conversation.timestamp).all()
+def get_conversation_history(session_id, limit=10):
+    conversation = Conversation.query.filter_by(session_id=session_id).order_by(Conversation.timestamp.asc()).limit(limit).all()
+
+    return conversation
 
 # Query the LLM based on the provided question and model
 def query_llm(question, session_id, model):
     # Get the appropriate prompt template based on the selected model
     model_prompt_template = get_model_prompt_template(model)
     
-    # Prepare the prompt for the model
-    prompt = model_prompt_template.format(question=question)
+    lastMessages = get_conversation_history(session_id)
     
-    # Ensure the prompt fits within the token limit of the model
+    history = ''
+    for exchange in lastMessages:
+        history += f"User: {exchange.message}\nBot: {exchange.response}\n"
+
+    full_prompt = f"{history}User: {question}\nBot:"
+
+    prompt = model_prompt_template.format(question=full_prompt)
+
     prompt = prompt[:3200]
     
+    relevant_docs = document_search.similarity_search(question)
+
+
     try:
         # Use the QA chain to get a response based on the prompt
-        qa_response = qa_chain.run(input_documents=[], question=prompt)
+        qa_response = qa_chain.run(input_documents=relevant_docs, question=prompt)
     except Exception as e:
         qa_response = f"Error generating response: {str(e)}"
     
@@ -126,6 +149,7 @@ def index():
 
 # Check for existing session; if not, create a new one
 @app.route('/chatbot_pdf', methods=['POST'])
+
 def chatbot_pdf():
     data = request.get_json()
     question = data['question']
