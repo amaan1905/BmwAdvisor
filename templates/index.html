@@ -5,6 +5,8 @@
     <style>
         body {
             background-color: black;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
         .header {
@@ -14,35 +16,65 @@
             margin-bottom: 5px;
             background-color: grey;
             color: white;
+            padding: 10px;
+            position: relative;
         }
 
         .header h1 {
             margin: 0;
-            position: absolute;
         }
 
         .header button {
             border-radius: 100%;
             background-color: black;
             color: white;
-            margin-left: auto;
             cursor: pointer;
             height: 30px;
             width: 30px;
             font-size: 15px;
             font-weight: bold;
+            position: absolute;
+            right: 10px;
         }
 
         .header button:hover {
             background-color: rgb(56, 56, 56);
         }
 
+        .main-container {
+            display: flex;
+            height: calc(100vh - 50px); /* Full height minus header height */
+        }
+
+        .side-menu {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 50px;
+            left: 10px;
+            align-items: flex-start;
+        }
+
+        .side-menu select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-bottom: 10px;
+        }
+
         .chatbot-container {
+            margin-left: 220px; /* Space for the side menu */
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: black;
         }
 
         .chat-container {
@@ -66,7 +98,6 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-
 
         .message-container {
             display: flex;
@@ -110,13 +141,10 @@
             align-items: center;
             width: 800px;
             padding-top: 15px;
-            flex-direction: row;
-            position: relative;
         }
 
         .chat-input-container input {
             flex: 1;
-            width: 100%;
             padding: 15px;
             padding-right: 40px;
             border: 1px solid #ccc;
@@ -127,18 +155,14 @@
         }
 
         .chat-input-container button {
-            top: 50%;
             background-color: black;
             color: white;
             padding: 10px 15px;
-            border-radius: 100%;
+            border-radius: 50%;
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            z-index: 1;
-            position: absolute;
-            right: 0;
-            transform: translateY(-20%);
+            margin-left: 10px;
         }
 
         .chat-input-container button:hover {
@@ -149,21 +173,31 @@
 <body id="body">
     <div class="header">
         <h1>BMW Advisor</h1>
-        <button id="help-btn" onclick="window.location.href='https://www.bmw.co.uk/en/index.html'">?</button>
+        <button id="help-btn" onclick="window.location.href='https://www.bmw.co.uk/en/index.html'" aria-label="Help">?</button>
     </div>
-    <div id="chatbot-container" class="chatbot-container">
-        <div id="chat-container" class="chat-container">
-            <img class='logo-bg' src="https://static.vecteezy.com/system/resources/previews/020/500/085/original/bmw-brand-logo-symbol-white-design-germany-car-automobile-illustration-with-black-background-free-vector.jpg" />
+    <div class="main-container">
+        <div class="side-menu">
+            <label for='model-select'>Choose a BMW model:</label>
+            <select id='model-select'>
+                <option value='bmw m3'>BMW M3</option>
+                <option value='bmw m5'>BMW M5</option>
+            </select>
         </div>
-        <div class="chat-input-container">
-            <input type="text" id="user-input" placeholder="Enter your query: " />
-            <button id="send-btn">></button>
+        <div id="chatbot-container" class="chatbot-container">
+            <div id="chat-container" class="chat-container">
+                <img class='logo-bg' src="https://static.vecteezy.com/system/resources/previews/020/500/085/original/bmw-brand-logo-symbol-white-design-germany-car-automobile-illustration-with-black-background-free-vector.jpg" alt="BMW Logo" />
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="user-input" placeholder="Enter your query: " />
+                <button id="send-btn" aria-label="Send Message">></button>
+            </div>
         </div>
     </div>
     <script>
         const chatContainer = document.getElementById("chat-container");
         const userInput = document.getElementById("user-input");
         const sendBtn = document.getElementById("send-btn");
+        const modelSelect = document.getElementById("model-select");
         let sessionId = null;
 
         sendBtn.addEventListener("click", sendMessage);
@@ -175,9 +209,10 @@
 
         function sendMessage() {
             const userMessage = userInput.value.trim();
+            const selectedModel = modelSelect.value;
             if (userMessage) {
                 displayMessage('user', userMessage);
-                sendMessageToServer(userMessage);
+                sendMessageToServer(userMessage, selectedModel);
                 userInput.value = "";
             }
         }
@@ -185,7 +220,6 @@
         function displayMessage(sender, message) {
             const messageContainer = document.createElement('div');
             messageContainer.classList.add('message-container', sender);
-            
 
             if (sender === 'bot') {
                 const logoElement = document.createElement('img');
@@ -203,13 +237,13 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        function sendMessageToServer(message) {
+        function sendMessageToServer(message, model) {
             fetch('chatbot_pdf', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ question: message, session_id: sessionId }),
+                body: JSON.stringify({ question: message, model: model, session_id: sessionId }),
             })
             .then(response => response.json())
             .then(data => {
