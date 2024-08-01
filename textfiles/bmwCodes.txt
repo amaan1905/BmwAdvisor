@@ -1,0 +1,574 @@
+OBD-3
+ 
+ 
+BMW Fault Codes (DTCs)  
+Below is a comprehensive listing of BMW DTCs and 
+the corresponding SAE P-codes.  
+Table a. Diagnostic trouble codes (DTCs)  
+BMW 
+
+fault code
+P-code
+Fault type and 
+function
+Signal type and 
+range
+Explanation
+
+fault code 1
+Ignition coil cyl.2
+Input analog timing 
+(100 mV)
+DME initiates secondary ignition for 
+each cylinder then looks for feedback 
+through shunt resistor in harness to 
+determine if ignition actually occurred.
+fault code 2
+Ignition coil cyl.4
+Input analog timing 
+(100 mV)
+DME initiates secondary ignition for 
+each cylinder then looks for feedback 
+through shunt resistor in harness to 
+determine if ignition actually occurred.
+fault code 3
+Ignition coil cyl.6
+Input analog timing 
+(100 mV)
+DME initiates secondary ignition for 
+each cylinder then looks for feedback 
+through shunt resistor in harness to 
+determine if ignition actually occurred.
+fault code 5
+P0202
+Injector circuit cyl. 
+2
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 6
+P0201
+Injector circuit cyl. 
+1
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 8
+P0101
+Mass air flow circuit 
+range/perf.
+Input analog (0-
+5V)
+Failed signal range check against 
+predefined diagnostic limits.
+fault code 10
+Engine coolant 
+temp. circuit 
+range/perf.
+Input analog (0-
+5V)
+Signal range is checked against 
+predefined diagnostic limits within 
+specific engine operations.
+fault code 11
+Coolant temp. 
+coolant outlet
+Input analog (0-
+5V)
+Signal range is checked against 
+predefined diagnostic limits within 
+specific engine operations.
+fault code 14
+P0111
+Intake air temp. 
+range/performance
+Input analog (0-
+5V)
+Signal range is checked against 
+predefined diagnostic limits within 
+specific engine operations.
+fault code 18
+P1397
+Exhaust cam 
+Input analog 
+Internal check of phase shift from 
+position sensor 
+malfunction 
+phase shift (0-5V)
+camshaft sensor - should change 
+during every crankshaft 
+revolution.Phase shift occurs due to 
+2:1 relationship between camshafts.
+fault code 19
+P1529
+VANOS solenoid 
+activation, exhaust 
+Output digital 
+pulse width (active 
+low) 
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 21
+P1525
+VANOS solenoid 
+activation, intake 
+Output digital 
+pulse width (active 
+low) 
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 22
+P0203
+Injector circuit cyl. 
+3
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 23
+P0206
+Injector circuit cyl. 
+6
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 24
+P0204
+Injector circuit cyl. 
+4
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 25
+P0135
+Oxygen sensor 
+heater pre-cat 
+(Bank1)
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 27
+P1550
+Idle control valve 
+closing coil
+Output digital 
+pulse width (active 
+low) 
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 29
+Ignition coil cyl.1 
+Input analog timing 
+(100 mV)
+DME initiates secondary ignition for 
+each cylinder then looks for feedback 
+through shunt resistor in harness to 
+determine if ignition actually occurred.
+fault code 30 
+Ignition coil cyl.3 
+Input analog timing 
+(100 mV)
+DME initiates secondary ignition for 
+each cylinder then looks for feedback 
+through shunt resistor in harness to 
+determine if ignition actually occurred.
+fault code 31
+Ignition coil cyl.5 
+Input analog timing DME initiates secondary ignition for 
+(100 mV)
+each cylinder then looks for feedback 
+through shunt resistor in harness to 
+determine if ignition actually occurred.
+fault code 33
+P0205
+Injector circuit cyl. 
+5
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 35
+P1453
+Secondary air 
+injection pump 
+Output digital 
+on/off (active low)
+TDME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 36
+MS 43
+Main relay 
+malfunction
+Input analog (0-
+12V)
+Signal range check between DME 
+ignition analog input and main relay 
+power circuit analog input.
+fault code 38
+MS 43
+Clutch switch faulty
+Input digital (0-
+12V)
+Plausibility check of clutch switch and 
+DME internal values such as load and 
+engine speed.
+fault code 39
+Brake light switch, 
+and brake light 
+plausibility test 
+Input digital (0-
+12V)
+When brake light switch is active, 
+brake light test switch must be also 
+active. If not, fault is stored.
+fault code 40
+Brake light switch, 
+pedal sensor 
+plausibility test
+Input digital / 
+analog (0-12V / 0-
+5V)
+If pedal sensor is showing angle 
+greater than "limp home angle" and 
+additionally brake light switch is 
+active, fault is stored.
+fault code 42
+Multi functional 
+steering wheel, 
+redundant code 
+Input binary 
+stream (0-12V)
+Every signal from cruise control 
+switch is transferred redundantly. A 
+fault is set whenever two redundant 
+information paths are showing a 
+different status.
+fault code 43
+Multi functional 
+steering wheel, 
+control switch 
+Input binary 
+stream (0-12V) 
+When status from cruise control 
+showing set/accelerate and 
+deceleration are same time, fault is 
+set.
+fault code 45
+Multi functional 
+steering wheel, 
+toggle-bit 
+Input binary 
+stream (0-12V) 
+Every 0.5 sec. a message that 
+includes a toggle bit (toggles between 
+0->1 and 1->0) is transmitted. 
+Change bit is monitored to indicate 
+proper function.
+fault code 47
+MS 43
+Torque monitoring 
+level 1
+DME internal 
+values logical
+fault code 48
+MS 43
+Internal control 
+module
+DME HW test 
+memory
+fault code 49
+ECU internal test
+DME HW test
+fault code 50
+P1145 
+Running losses 
+Output digital 
+DME final stage will set flag 
+MS 42
+valve (3/2), final 
+stage 
+on/off (active low) 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+MS 43
+ECU internal test
+DME HW test
+fault code 51
+MS 43
+ECU internal test
+DME HW test
+fault code 52
+Rear exhaust valve 
+flap 
+Output digital 
+steady (active low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 53
+P1509
+Idle control valve 
+opening coil
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 55
+P0155
+Oxygen sensor 
+heater pre-cat 
+(Bank 2)
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 56
+Ignition feedback, 
+interruption at 
+shunt resistor 
+Input analog (32V) Check for correct signal voltage. If 
+voltage is 32V (limitation voltage) 
+then secondary ignition voltage is 
+detected and shunt resistor may be 
+faulty.
+fault code 57
+P0325
+Knock sensor 1 
+circuit, (Bank 1) 
+circuit continuity
+Input analog 
+amplitude (13-
+19kHz) 
+Plausibility check between knock 
+sensor amplitude during knocking 
+with internal knock detection mapped 
+DME values.
+fault code 59
+P0330
+Knock sensor 2 
+circuit, (Bank 2) 
+circuit continuity
+Input analog 
+amplitude (13-
+19kHz)
+Plausibility check between knock 
+sensor amplitude during knocking 
+with internal knock detection mapped 
+DME values.
+fault code 61
+P0141
+Oxygen sensor 
+heater post-cat 
+(Bank 2)
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 62
+P0412
+Secondary air 
+injection system 
+switching valve
+Output digital 
+on/off (active low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 65
+P0340
+Intake cam position 
+sensor, malfunction
+Input analog 
+phase shift 0-5V 
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 68
+EVAP system, 
+purge control valve 
+circuit
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 69
+Relay fuel pump
+Output digital 
+on/off (active low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 74
+AC compressor 
+relay
+Output digital 
+on/off (active low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists.
+fault code 79
+P0161
+Oxygen sensor 
+heater post-cat 
+(Bank 1)
+Output digital 
+pulse width (active 
+low)
+DME final stage will set flag 
+whenever a short to ground, a short 
+to battery voltage or a disconnection 
+between output transistor and 
+component exists. 
+fault code 83
+P0335
+Crankshaft position 
+sensor, malfunction
+Input digital (0-
+12V)
+Checks for correct signal pattern and 
+correct number of expected flywheel 
+teeth.
+fault code 100
+P0601
+Internal control 
+module, memory 
+check sum or 
+communication
+DME internal 
+values logical
+Internal hardware test of RAM, ROM, 
+and Flash Prom.
+fault code 103
+P1519
+VANOS faulty 
+reference value 
+intake
+DME internal 
+values logical
+Maximum VANOS adjustment angle, 
+checked at every engine start must 
+be within a specified limit.
+fault code 104
+P1520
+VANOS faulty 
+reference value 
+exhaust
+DME internal 
+values logical 
+Maximum VANOS adjustment angle, 
+checked at every engine start must 
+be within a specified limit.
+fault code 105
+P1522
+VANOS stuck 
+(Bank 1) intake
+DME internal 
+values
+Monitoring of a desired VANOS 
+adjustment within a predefined 
+diagnostic time limit.
+fault code 106
+P1523
+VANOS stuck 
+(Bank 2) exhaust
+DME internal 
+values
+Monitoring of a desired VANOS 
+adjustment within a predefined 
+diagnostic time limit.
+fault code 109
+P1580
+Motor throttle valve 
+pulse width not 
+plausible
+Output digital 
+pulse width (0-
+12V)
+Throttle position control algorithm 
+checks for problems with mechanical 
+coupling spring within motor throttle 
+body.
+fault code 110
+P1542
+Pedal sensor 
+Input analog (0-
+Failed signal range check against 
+potentiometer 1
+5V)
+predefined diagnostic limits.
+
+ 
+
