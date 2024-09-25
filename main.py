@@ -9,6 +9,9 @@ from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
 import glob
 import os
+from asgiref.wsgi import WsgiToAsgi 
+import uvicorn
+import fastapi
 
 
 # Retrieving API key
@@ -184,5 +187,10 @@ def chatbot_pdf():
     response = query_llm(question, session_id, model)
     return jsonify({'response': response, 'session_id': session_id})
 
+
+asgi_app = WsgiToAsgi(app)
+
+# Uvicorn entry point
 if __name__ == '__main__':
-    app.run(debug=True)
+    import uvicorn
+    uvicorn.run(asgi_app, host='0.0.0.0', port=8000)
